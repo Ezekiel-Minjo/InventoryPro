@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}User Details{% endblock %}
+{% block page_title %}User Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-custom">
+        <div class="card-body">
+            <h5>Edit User: {{ user_obj.username }}</h5>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" value="{{ user_form.username.value }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ user_form.email.value }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="full_name" class="form-control" value="{{ profile_form.full_name.value }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+                    <select name="role" class="form-select">
+                        {% for r in profile_form.fields.role.queryset %}
+                            <option value="{{ r.id }}" {% if profile_form.role.value == r.id|stringformat:"s" %}selected{% endif %}>{{ r.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update User</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

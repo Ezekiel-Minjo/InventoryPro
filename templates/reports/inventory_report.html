@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory Report{% endblock %}
+{% block page_title %}Inventory Report{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Total Products</h6>
+                <h3>{{ total_products|default:"0" }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Inventory Value</h6>
+                <h3 class="text-success">KES {{ total_value|floatformat:2|default:"0.00" }}</h3>
+                <small class="text-muted">At cost price</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Potential Revenue</h6>
+                <h3 class="text-info">KES {{ total_selling_value|floatformat:2|default:"0.00" }}</h3>
+                <small class="text-muted">At selling price</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Potential Profit</h6>
+                <h3 class="text-primary">KES {{ potential_profit|floatformat:2|default:"0.00" }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Status -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card card-custom text-center">
+                <div class="card-body">
+                    <i class="bi bi-check-circle text-success" style="font-size: 3rem;"></i>
+                    <h3 class="mt-2">{{ in_stock|default:"0" }}</h3>
+                    <p class="text-muted mb-0">In Stock</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-custom text-center">
+                <div class="card-body">
+                    <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="mt-2">{{ low_stock|default:"0" }}</h3>
+                    <p class="text-muted mb-0">Low Stock</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-custom text-center">
+                <div class="card-body">
+                    <i class="bi bi-x-circle text-danger" style="font-size: 3rem;"></i>
+                    <h3 class="mt-2">{{ out_of_stock|default:"0" }}</h3>
+                    <p class="text-muted mb-0">Out of Stock</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Inventory by Category</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Products</th>
+                            <th>Total Stock</th>
+                            <th>Total Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in category_breakdown %}
+                        <tr>
+                            <td><span class="badge bg-info">{{ category.category__name|default:"Uncategorized" }}</span></td>
+                            <td>{{ category.product_count }}</td>
+                            <td>{{ category.total_stock|default:"0" }}</td>
+                            <td><strong>KES {{ category.total_value|floatformat:2|default:"0.00" }}</strong></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">No inventory data</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Products -->
+    <div class="card card-custom">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Product Inventory Details</h5>
+            <a href="{% url 'reports:export_inventory_pdf' %}" class="btn btn-sm btn-danger">
+                <i class="bi bi-file-pdf"></i> Export PDF
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Cost Price</th>
+                            <th>Selling Price</th>
+                            <th>Stock Value</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td><strong>{{ product.name }}</strong></td>
+                            <td>{{ product.sku }}</td>
+                            <td>
+                                {% if product.category %}
+                                <span class="badge bg-info">{{ product.category.name }}</span>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.current_stock == 0 %}
+                                <span class="badge bg-danger">{{ product.current_stock }}</span>
+                                {% elif product.is_low_stock %}
+                                <span class="badge bg-warning text-dark">{{ product.current_stock }}</span>
+                                {% else %}
+                                <span class="badge bg-success">{{ product.current_stock }}</span>
+                                {% endif %}
+                            </td>
+                            <td>KES {{ product.cost_price }}</td>
+                            <td>KES {{ product.selling_price }}</td>
+                            <td><strong>KES {{ product.stock_value|floatformat:2 }}</strong></td>
+                            <td>
+                                {% if product.current_stock == 0 %}
+                                <span class="badge bg-danger">Out</span>
+                                {% elif product.is_low_stock %}
+                                <span class="badge bg-warning text-dark">Low</span>
+                                {% else %}
+                                <span class="badge bg-success">OK</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">No products found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

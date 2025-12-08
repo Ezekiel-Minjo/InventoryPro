@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Suppliers{% endblock %}
+{% block page_title %}Suppliers{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-custom">
+        <div class="card-header bg-white d-flex justify-content-between">
+            <h5 class="mb-0">All Suppliers</h5>
+            <a href="{% url 'suppliers:supplier_create' %}" class="btn btn-success">
+                <i class="bi bi-plus"></i> Add Supplier
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table datatable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.contact_person }}</td>
+                        <td>{{ supplier.phone_number }}</td>
+                        <td>{{ supplier.email }}</td>
+                        <td>
+                            <a href="{% url 'suppliers:supplier_detail' supplier.id %}" 
+                               class="btn btn-sm btn-primary">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

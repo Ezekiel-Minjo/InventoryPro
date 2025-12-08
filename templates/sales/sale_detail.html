@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Sale {{ sale.sale_number }}{% endblock %}
+{% block page_title %}Receipt{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        .no-print { display: none; }
+        .receipt-container { max-width: 100%; }
+    }
+    
+    .receipt-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border: 1px solid #ddd;
+    }
+    
+    .receipt-header {
+        text-align: center;
+        border-bottom: 2px dashed #333;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .receipt-footer {
+        border-top: 2px dashed #333;
+        padding-top: 20px;
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="no-print mb-3">
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Print Receipt
+        </button>
+        <a href="{% url 'sales:sales_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Sales
+        </a>
+        {% if sale.payment_method == 'MPESA' and not sale.mpesa_transaction_id %}
+        <a href="{% url 'sales:refund_sale' sale.id %}" class="btn btn-warning">
+            <i class="bi bi-arrow-counterclockwise"></i> Refund
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="receipt-container">
+        <!-- Header -->
+        <div class="receipt-header">
+            <h2>INVENTORY PRO</h2>
+            <p class="mb-1">123 Business Street, Nairobi</p>
+            <p class="mb-1">Tel: +254 712 345 678</p>
+            <p>Email: info@inventorypro.co.ke</p>
+        </div>
+
+        <!-- Sale Info -->
+        <div class="row mb-3">
+            <div class="col-6">
+                <strong>Receipt #:</strong> {{ sale.sale_number }}<br>
+                <strong>Date:</strong> {{ sale.created_at|date:"Y-m-d H:i" }}
+            </div>
+            <div class="col-6 text-end">
+                {% if sale.customer_name %}
+                <strong>Customer:</strong> {{ sale.customer_name }}<br>
+                {% if sale.customer_phone %}
+                <strong>Phone:</strong> {{ sale.customer_phone }}
+                {% endif %}
+                {% else %}
+                <strong>Customer:</strong> Walk-in
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Items Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-end">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td class="text-center">{{ item.quantity }}</td>
+                    <td class="text-end">{{ item.unit_price }}</td>
+                    <td class="text-end"><strong>{{ item.subtotal }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end"><strong>TOTAL:</strong></td>
+                    <td class="text-end">
+                        <h4 class="mb-0">KES {{ sale.total_amount }}</h4>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Payment Info -->
+        <div class="mb-3">
+            <strong>Payment Method:</strong> 
+            {% if sale.payment_method == 'MPESA' %}
+            M-Pesa
+            {% if sale.mpesa_transaction_id %}
+            <br><small>Transaction: {{ sale.mpesa_transaction_id }}</small>
+            {% endif %}
+            {% elif sale.payment_method == 'CASH' %}
+            Cash
+            {% else %}
+            Card
+            {% endif %}
+        </div>
+
+        <!-- Footer -->
+        <div class="receipt-footer">
+            <p class="mb-1"><strong>Thank you for your business!</strong></p>
+            <p class="mb-1">Served by: {{ sale.created_by.username }}</p>
+            <small class="text-muted">Goods once sold are not returnable</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

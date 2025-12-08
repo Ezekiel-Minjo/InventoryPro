@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales History{% endblock %}
+{% block page_title %}Sales History{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Filters -->
+    <div class="card card-custom mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">End Date</label>
+                    <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Payment Method</label>
+                    <select name="payment_method" class="form-select">
+                        <option value="">All Methods</option>
+                        <option value="CASH">Cash</option>
+                        <option value="MPESA">M-Pesa</option>
+                        <option value="CARD">Card</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-filter"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Total Sales</h6>
+                <h3 class="text-success">KES {{ total_sales|floatformat:2 }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Transactions</h6>
+                <h3>{{ sales.count }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Average Sale</h6>
+                <h3>KES {% widthratio total_sales sales.count 1 %}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Table -->
+    <div class="card card-custom">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">All Sales</h5>
+            <a href="{% url 'sales:new_sale' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> New Sale
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 datatable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Sale #</th>
+                            <th>Date & Time</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Payment</th>
+                            <th>Staff</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in sales %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'sales:sale_detail' sale.id %}">
+                                    <strong>{{ sale.sale_number }}</strong>
+                                </a>
+                            </td>
+                            <td>{{ sale.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if sale.customer_name %}
+                                <strong>{{ sale.customer_name }}</strong><br>
+                                <small class="text-muted">{{ sale.customer_phone }}</small>
+                                {% else %}
+                                <em class="text-muted">Walk-in Customer</em>
+                                {% endif %}
+                            </td>
+                            <td>{{ sale.items.count }} item(s)</td>
+                            <td><strong class="text-success">KES {{ sale.total_amount }}</strong></td>
+                            <td>
+                                {% if sale.payment_method == 'MPESA' %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-phone"></i> M-Pesa
+                                </span>
+                                {% elif sale.payment_method == 'CASH' %}
+                                <span class="badge bg-secondary">
+                                    <i class="bi bi-cash"></i> Cash
+                                </span>
+                                {% else %}
+                                <span class="badge bg-info">
+                                    <i class="bi bi-credit-card"></i> Card
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ sale.created_by.username }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'sales:sale_detail' sale.id %}" 
+                                       class="btn btn-sm btn-outline-primary" title="View Receipt">
+                                        <i class="bi bi-receipt"></i>
+                                    </a>
+                                    <button onclick="printReceipt({{ sale.id }})" 
+                                            class="btn btn-sm btn-outline-secondary" title="Print">
+                                        <i class="bi bi-printer"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <i class="bi bi-cart-x fs-1 text-muted"></i>
+                                <p class="text-muted">No sales found</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function printReceipt(saleId) {
+    window.open(`/sales/${saleId}/print/`, '_blank');
+}
+</script>
+{% endblock %}

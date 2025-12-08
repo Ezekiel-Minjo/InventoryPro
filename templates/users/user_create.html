@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Create User{% endblock %}
+{% block page_title %}Create New User{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-custom">
+        <div class="card-body">
+            <h5>Create User</h5>
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Username -->
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="text-danger">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="text-danger">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    {{ form.password_confirm.label_tag }}
+                    {{ form.password_confirm }}
+                    {% if form.password_confirm.errors %}
+                        <div class="text-danger">{{ form.password_confirm.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Role Dropdown -->
+                <div class="mb-3">
+                    {{ form.role.label_tag }}
+                    {{ form.role }}
+                    {% if form.role.errors %}
+                        <div class="text-danger">{{ form.role.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-success">Create User</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

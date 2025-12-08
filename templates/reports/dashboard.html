@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Reports - Inventory Management{% endblock %}
+{% block page_title %}Reports & Analytics{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card-custom">
+                <div class="card-body">
+                    <h4 class="mb-0">
+                        <i class="bi bi-graph-up-arrow"></i> Business Intelligence & Reports
+                    </h4>
+                    <p class="text-muted mb-0">Generate detailed reports and analyze your business performance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Reports Grid -->
+    <div class="row">
+        {% for report in available_reports %}
+        <div class="col-lg-6 col-xl-3 mb-4">
+            <div class="card card-custom h-100 hover-shadow">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-{{ report.icon }} text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">{{ report.name }}</h5>
+                    <p class="card-text text-muted">{{ report.description }}</p>
+                    <a href="{% url report.url %}" class="btn btn-primary">
+                        <i class="bi bi-file-earmark-bar-graph"></i> View Report
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card card-custom">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-speedometer2"></i> Quick Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="bi bi-box-seam text-primary fs-1"></i>
+                                <h4 class="mt-2 mb-0">{{ total_products|default:"0" }}</h4>
+                                <p class="text-muted mb-0">Total Products</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="bi bi-cart-check text-success fs-1"></i>
+                                <h4 class="mt-2 mb-0">{{ total_sales|default:"0" }}</h4>
+                                <p class="text-muted mb-0">Total Sales</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="bi bi-people text-info fs-1"></i>
+                                <h4 class="mt-2 mb-0">{{ total_customers|default:"0" }}</h4>
+                                <p class="text-muted mb-0">Customers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="bi bi-truck text-warning fs-1"></i>
+                                <h4 class="mt-2 mb-0">{{ total_suppliers|default:"0" }}</h4>
+                                <p class="text-muted mb-0">Suppliers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card card-custom">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history"></i> Report Generation History
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> 
+                        Select a report type above to generate detailed analytics. 
+                        Reports can be exported to CSV or PDF format.
+                    </div>
+                    
+                    <div class="text-center py-4">
+                        <i class="bi bi-file-earmark-bar-graph text-muted" style="font-size: 4rem;"></i>
+                        <p class="text-muted">No reports generated yet. Start by selecting a report type above.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options -->
+    <div class="row mt-4 mb-4">
+        <div class="col-12">
+            <div class="card card-custom">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-download"></i> Export Options
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">Quick export options for common reports:</p>
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'reports:export_sales_csv' %}" class="btn btn-outline-success">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Export Sales (CSV)
+                        </a>
+                        <a href="{% url 'reports:export_inventory_pdf' %}" class="btn btn-outline-danger">
+                            <i class="bi bi-file-earmark-pdf"></i> Export Inventory (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

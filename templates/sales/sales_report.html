@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales Report{% endblock %}
+{% block page_title %}Sales Report{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Filters -->
+    <div class="card card-custom mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" name="start_date" class="form-control" 
+                           value="{{ start_date|date:'Y-m-d' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">End Date</label>
+                    <input type="date" name="end_date" class="form-control" 
+                           value="{{ end_date|date:'Y-m-d' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-filter"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Total Sales</h6>
+                <h3 class="text-success">KES {{ total_sales|floatformat:2|default:"0.00" }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Transactions</h6>
+                <h3>{{ total_transactions|default:"0" }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h6 class="text-muted mb-1">Average Sale</h6>
+                <h3>KES {{ average_sale|floatformat:2|default:"0.00" }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Breakdown -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Payment Method Breakdown</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Payment Method</th>
+                            <th>Transactions</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payment_breakdown %}
+                        <tr>
+                            <td>
+                                {% if payment.payment_method == 'MPESA' %}
+                                <span class="badge bg-success">M-Pesa</span>
+                                {% elif payment.payment_method == 'CASH' %}
+                                <span class="badge bg-secondary">Cash</span>
+                                {% else %}
+                                <span class="badge bg-info">Card</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ payment.count }}</td>
+                            <td><strong>KES {{ payment.total|floatformat:2 }}</strong></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-muted">No payment data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Sales -->
+    <div class="card card-custom">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Daily Sales Breakdown</h5>
+            <a href="{% url 'reports:export_sales_csv' %}?start_date={{ start_date|date:'Y-m-d' }}&end_date={{ end_date|date:'Y-m-d' }}" 
+               class="btn btn-sm btn-success">
+                <i class="bi bi-download"></i> Export CSV
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Transactions</th>
+                            <th>Total Sales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for day in daily_sales %}
+                        <tr>
+                            <td>{{ day.date }}</td>
+                            <td>{{ day.count }}</td>
+                            <td><strong>KES {{ day.total|floatformat:2 }}</strong></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-muted">No sales data for this period</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

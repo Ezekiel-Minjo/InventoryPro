@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock List{% endblock %}
+{% block page_title %}Current Stock Levels{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-custom">
+        <div class="card-body">
+            <h5>Stock Management</h5>
+            <p>Total Products: {{ products.count }}</p>
+            <p>Total Value: KES {{ total_value|floatformat:2 }}</p>
+            
+            <table class="table datatable">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Value</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category.name|default:"-" }}</td>
+                        <td>{{ product.current_stock }}</td>
+                        <td>KES {{ product.stock_value|floatformat:2 }}</td>
+                        <td>
+                            <a href="{% url 'inventory:adjust_stock' product.id %}" class="btn btn-sm btn-primary">
+                                Adjust
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Team{% endblock %}
+{% block page_title %}Create Team{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-custom">
+        <div class="card-body">
+            <h5>Create Team</h5>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Team Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ form.name.value }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Members</label>
+                    <select name="members" class="form-select" multiple>
+                        {% for user in form.fields.members.queryset %}
+                            <option value="{{ user.id }}" {% if user.id|stringformat:"s" in form.members.value|stringformat:"s" %}selected{% endif %}>{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Create Team</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
