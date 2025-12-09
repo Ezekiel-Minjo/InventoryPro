@@ -41,7 +41,7 @@ def supplier_create(request):
     else:
         form = SupplierForm()
     
-    return render(request, 'suppliers/supplier_form.html', {'form': form})
+    return render(request, 'suppliers/supplier_create.html', {'form': form})
 
 
 @login_required

@@ -3069,3 +3069,151 @@ INFO 2025-12-09 01:06:30,315 basehttp "GET /media/products/apple.jpg HTTP/1.1" 2
 INFO 2025-12-09 01:06:30,449 basehttp "GET /media/products/mens-tshirt.jpg HTTP/1.1" 200 2695210
 INFO 2025-12-09 01:06:30,464 basehttp "GET /media/products/womens-jeans.jpg HTTP/1.1" 200 3923102
 INFO 2025-12-09 01:06:35,965 basehttp "GET /dashboard/ HTTP/1.1" 200 69851
+INFO 2025-12-09 01:47:49,582 autoreload Watching for file changes with StatReloader
+INFO 2025-12-09 01:48:20,831 basehttp "GET /sales/ HTTP/1.1" 200 76276
+INFO 2025-12-09 01:48:20,902 basehttp "GET /static/js/custom.js HTTP/1.1" 304 0
+INFO 2025-12-09 01:48:23,715 basehttp "GET /products/ HTTP/1.1" 200 56336
+INFO 2025-12-09 01:48:44,430 basehttp "GET /sales/ HTTP/1.1" 200 76273
+INFO 2025-12-09 01:48:49,317 basehttp "GET /inventory/ HTTP/1.1" 200 41571
+INFO 2025-12-09 01:49:02,368 basehttp "GET /sales/new/ HTTP/1.1" 200 61911
+INFO 2025-12-09 01:50:05,052 basehttp "GET /products/ HTTP/1.1" 200 56335
+INFO 2025-12-09 01:50:44,332 basehttp "GET /inventory/ HTTP/1.1" 200 41571
+INFO 2025-12-09 10:06:13,648 basehttp "GET /suppliers/ HTTP/1.1" 200 43504
+INFO 2025-12-09 10:06:13,751 basehttp "GET /static/js/custom.js HTTP/1.1" 304 0
+INFO 2025-12-09 10:06:13,754 basehttp "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-12-09 10:06:13,754 basehttp "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:06:13,896 basehttp "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:06:13,916 basehttp "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+ERROR 2025-12-09 10:06:19,242 log Internal Server Error: /suppliers/6/
+Traceback (most recent call last):
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py", line 27, in supplier_detail
+    return render(request, 'suppliers/supplier_detail.html', {
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: suppliers/supplier_detail.html
+ERROR 2025-12-09 10:06:19,474 basehttp "GET /suppliers/6/ HTTP/1.1" 500 127157
+INFO 2025-12-09 10:10:16,934 autoreload C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py changed, reloading.
+INFO 2025-12-09 10:10:26,262 autoreload Watching for file changes with StatReloader
+INFO 2025-12-09 10:11:02,309 autoreload C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py changed, reloading.
+INFO 2025-12-09 10:11:05,109 autoreload Watching for file changes with StatReloader
+INFO 2025-12-09 10:12:21,972 autoreload Watching for file changes with StatReloader
+INFO 2025-12-09 10:13:55,521 basehttp "GET /accounts/login/?next=/sales/ HTTP/1.1" 200 39567
+INFO 2025-12-09 10:14:14,288 basehttp "GET /accounts/login/?next=/sales/ HTTP/1.1" 200 39566
+INFO 2025-12-09 10:14:19,696 basehttp "POST /accounts/login/?next=/sales/ HTTP/1.1" 302 0
+INFO 2025-12-09 10:14:20,260 basehttp "GET /sales/ HTTP/1.1" 200 76274
+INFO 2025-12-09 10:14:29,284 basehttp "GET /dashboard/ HTTP/1.1" 200 69857
+INFO 2025-12-09 10:14:32,562 basehttp "GET /products/ HTTP/1.1" 200 56336
+INFO 2025-12-09 10:14:33,135 basehttp "GET /media/products/wheat-bread.jpg HTTP/1.1" 200 9538
+INFO 2025-12-09 10:14:33,351 basehttp "GET /media/products/bluetooth-headphones.jpg HTTP/1.1" 200 982735
+INFO 2025-12-09 10:14:33,353 basehttp "GET /media/products/mouse.jpg HTTP/1.1" 200 899415
+INFO 2025-12-09 10:14:33,365 basehttp "GET /media/products/apple.jpg HTTP/1.1" 200 1173811
+INFO 2025-12-09 10:14:33,537 basehttp "GET /media/products/mens-tshirt.jpg HTTP/1.1" 200 2695210
+INFO 2025-12-09 10:14:33,593 basehttp "GET /media/products/womens-jeans.jpg HTTP/1.1" 200 3923102
+INFO 2025-12-09 10:14:36,476 basehttp "GET /sales/ HTTP/1.1" 200 76274
+INFO 2025-12-09 10:14:37,481 basehttp "GET /sales/ HTTP/1.1" 200 76274
+INFO 2025-12-09 10:14:39,560 basehttp "GET /sales/new/ HTTP/1.1" 200 61911
+INFO 2025-12-09 10:14:51,058 basehttp "GET /inventory/ HTTP/1.1" 200 41571
+INFO 2025-12-09 10:14:53,330 basehttp "GET /suppliers/ HTTP/1.1" 200 43502
+INFO 2025-12-09 10:14:56,537 basehttp "GET /reports/ HTTP/1.1" 200 45966
+INFO 2025-12-09 10:14:58,851 basehttp "GET /admin/ HTTP/1.1" 200 52904
+INFO 2025-12-09 10:14:59,044 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,048 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,049 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,049 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,049 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,050 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,084 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,108 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-12-09 10:14:59,110 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-12-09 10:15:12,276 basehttp "GET /dashboard/ HTTP/1.1" 200 69857
+INFO 2025-12-09 10:15:50,014 basehttp "GET /inventory/ HTTP/1.1" 200 41570
+INFO 2025-12-09 10:16:01,021 basehttp "GET /suppliers/ HTTP/1.1" 200 43504
+INFO 2025-12-09 10:16:03,551 basehttp "GET /suppliers/10/ HTTP/1.1" 200 38272
+INFO 2025-12-09 10:16:09,723 basehttp "GET /suppliers/ HTTP/1.1" 200 43503
+ERROR 2025-12-09 10:16:12,954 log Internal Server Error: /suppliers/create/
+Traceback (most recent call last):
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py", line 44, in supplier_create
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: suppliers/supplier_form.html
+ERROR 2025-12-09 10:16:13,160 basehttp "GET /suppliers/create/ HTTP/1.1" 500 126327
+INFO 2025-12-09 10:17:09,834 autoreload C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\urls.py changed, reloading.
+INFO 2025-12-09 10:17:13,151 autoreload Watching for file changes with StatReloader
+INFO 2025-12-09 10:17:20,127 basehttp "GET /suppliers/ HTTP/1.1" 200 43504
+ERROR 2025-12-09 10:17:24,025 log Internal Server Error: /suppliers/create/
+Traceback (most recent call last):
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py", line 44, in supplier_create
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: suppliers/supplier_form.html
+ERROR 2025-12-09 10:17:24,317 basehttp "GET /suppliers/create/ HTTP/1.1" 500 126327
+ERROR 2025-12-09 10:17:27,060 log Internal Server Error: /suppliers/create/
+Traceback (most recent call last):
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py", line 44, in supplier_create
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: suppliers/supplier_form.html
+ERROR 2025-12-09 10:17:27,260 basehttp "GET /suppliers/create/ HTTP/1.1" 500 126464
+ERROR 2025-12-09 10:17:28,631 log Internal Server Error: /suppliers/create/
+Traceback (most recent call last):
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py", line 44, in supplier_create
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ezeki\Desktop\inventory_management\venv\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: suppliers/supplier_form.html
+ERROR 2025-12-09 10:17:28,838 basehttp "GET /suppliers/create/ HTTP/1.1" 500 126464
+INFO 2025-12-09 10:18:55,343 autoreload C:\Users\ezeki\Desktop\inventory_management\apps\suppliers\views.py changed, reloading.
+INFO 2025-12-09 10:18:59,191 autoreload Watching for file changes with StatReloader
